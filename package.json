@@ -4,7 +4,12 @@
   "description": "Load pino logs into MongoDB",
   "main": "index.js",
   "scripts": {
-    "test": "clear && mocha --opts mocha.opts"
+    "test": "clear && mocha --opts mocha.opts",
+    "dev": "babel src --out-dir dist --watch --presets=latest",
+    "dev": "babel src --out-dir dist --presets=latest"
+  },
+  "bin": {
+    "pino-mongodb": "index.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +28,11 @@
   },
   "homepage": "https://github.com/ViktorKonsta/pino-mongodb#readme",
   "dependencies": {
+    "commander": "^2.9.0",
     "mongodb": "^2.2.11"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0"
   }
 }
