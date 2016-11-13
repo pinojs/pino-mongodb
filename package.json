@@ -1,0 +1,28 @@
+{
+  "name": "pino-mongodb",
+  "version": "0.0.0",
+  "description": "Load pino logs into MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "clear && mocha --opts mocha.opts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViktorKonsta/pino-mongodb.git"
+  },
+  "keywords": [
+    "pino",
+    "mongo",
+    "mongodb",
+    "pino-mongodb"
+  ],
+  "author": "ViktorKonsta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ViktorKonsta/pino-mongodb/issues"
+  },
+  "homepage": "https://github.com/ViktorKonsta/pino-mongodb#readme",
+  "dependencies": {
+    "mongodb": "^2.2.11"
+  }
+}
