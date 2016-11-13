@@ -1,6 +1,12 @@
 # pino-mongodb
 Load pino logs into MongoDB
 
+## Install
+
+```
+npm i -g pino-mongodb
+```
+
 ## Usage
 
 It takes `process.stdin` stream, parses the data and tries to insert that data into  
