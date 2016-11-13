@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "clear && mocha --opts mocha.opts",
-    "build": "babel src --out-dir dist --presets=latest --plugins=babel-plugin-transform-runtime",
-    "dev": "npm run build -- --watch",
     "postversion": "git push & git push --tags"
   },
   "bin": {
-    "pino-mongodb": "index.js"
+    "pino-mongodb": "pino-mongodb.js"
   },
   "repository": {
     "type": "git",
@@ -30,13 +28,6 @@
   "homepage": "https://github.com/ViktorKonsta/pino-mongodb#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "mongodb": "^2.2.11",
-    "babel-runtime": "^6.18.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-latest": "^6.16.0"
+    "mongodb": "^2.2.11"
   }
 }
