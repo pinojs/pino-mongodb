@@ -6,7 +6,8 @@
   "scripts": {
     "test": "clear && mocha --opts mocha.opts",
     "build": "babel src --out-dir dist --presets=latest --plugins=babel-plugin-transform-runtime",
-    "dev": "npm run build -- --watch"
+    "dev": "npm run build -- --watch",
+    "postversion": "git push & git push --tags"
   },
   "bin": {
     "pino-mongodb": "index.js"

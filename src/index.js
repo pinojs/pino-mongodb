@@ -8,7 +8,7 @@ program
   .option("-P, --port <port>", "DataBase port (27017)", "27017")
   .option("-d, --db <name>", "DataBase name (logs)", "logs")
   .option("-c, --collection <name>", "DataBase collection name (logs)", "logs")
-  .option("-u, --user <username>", "DataBase username (root)", "admin")
+  .option("-u, --user <username>", "DataBase username (root)", "root")
   .option("-p, --pass <password>", "DataBase username password ()", "")
   .parse(process.argv)
 
