@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "clear && mocha --opts mocha.opts",
-    "postversion": "git push & git push --tags"
+    "postversion": "git push & git push --tags & npm publish"
   },
   "bin": {
     "pino-mongodb": "pino-mongodb.js"
