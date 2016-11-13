@@ -43,11 +43,12 @@ function onConnection(e, db) {
   process.stdin.setEncoding("utf8")
   process.stdin.on("data", function stdin(data) {
 
-    var document = null
+    var document = {}
+    var json = jsonParse(data).value
 
-    try {
-      document = jsonParse(data)
-    } catch (e) {
+    if (json) {
+      document = json
+    } else {
       document = {
         msg: data
       }
