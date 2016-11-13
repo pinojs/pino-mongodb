@@ -31,19 +31,36 @@ function onConnection(e, db) {
 
   var collection = db.collection(params.collection)
   
+  process.stdin.resume()
+  process.stdin.setEncoding("utf8")
+  process.stdin.on("data", function stdin(data) {
 
+    var document = null
+
+    try {
+      document = JSON.parse(data)
+    } catch (e) {
+      document = {
+        msg: data
+      }
+    }
+
+    collection.insertOne(document, function insertOne(e) {
+      if (e) {
+        return handleError(e)
+      }
+    })
+
+    process.stdout.write(JSON.stringify(document) + "\n")
+
+  })
 }
 
-function stdin() {}
-
 function handleError(e) {
-
   if (e instanceof Error) {
     console.error(e)
   } else {
     console.error(new Error(e))
   }
-
   return
-
 }
