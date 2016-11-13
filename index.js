@@ -15,6 +15,13 @@ params
   .option("-p, --pass <password>", "DataBase username password ()", "")
   .parse(process.argv)
 
+params.host = process.env.DB_HOST || params.host
+params.port = process.env.DB_PORT || params.port
+params.db = process.env.DB_NAME || params.db
+params.collection = process.env.DB_COLLECTION || params.collection
+params.user = process.env.DB_USER || params.user
+params.pass = process.env.DB_PASS || params.pass
+
 var mongoOptions = "mongodb://"
   + (params.user && params.pass
       ? "[" + params.user + ":" + params.pass + "]@"

@@ -18,6 +18,21 @@ It takes `process.stdin` stream, parses the data and tries to insert that data i
 node server.js | pino-mongodb [options]
 ```
 
+### Options
+
+To define db connection you can either specify configuration with `args` or with `env`
+
+env | describe
+:--- | :---
+`DB_HOST` | DataBase host
+`DB_PORT` | DataBase port
+`DB_NAME` | DataBase name
+`DB_COLLECTION` | DataBase collection name
+`DB_USER` | DataBase username
+`DB_PASS` | DataBase password
+
+**Note**: if `env` variable is defined then `argv` variable will be ignored
+
 ### Help
 
 ```
