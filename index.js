@@ -1,6 +1,7 @@
 var pkg = require("./package.json")
 var MongoClient = require("mongodb").MongoClient
 var params = require("commander")
+var stringify = require("fast-safe-stringify")
 
 params
   .version(pkg.version)
@@ -57,7 +58,7 @@ function onConnection(e, db) {
       }
     })
 
-    process.stdout.write(JSON.stringify(document) + "\n")
+    process.stdout.write(stringify(document) + "\n")
 
   })
 }

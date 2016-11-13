@@ -28,6 +28,7 @@
   "homepage": "https://github.com/ViktorKonsta/pino-mongodb#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "fast-safe-stringify": "^1.1.1",
     "mongodb": "^2.2.11"
   }
 }
