@@ -14,9 +14,9 @@ params
   .parse(process.argv)
 
 var mongoOptions = "mongodb://"
-  + (params.user && params.pass)
-    ? "[" + params.user + ":" + params.pass + "]@"
-    : ""
+  + (params.user && params.pass
+      ? "[" + params.user + ":" + params.pass + "]@"
+      : "")
   + params.host
   + ":" + params.port
   + "/" + params.db
@@ -31,6 +31,12 @@ function onConnection(e, db) {
 
   var collection = db.collection(params.collection)
   
+  process.on("SIGINT", function() {
+    db.close(function() {
+      process.exit()
+    })
+  })
+
   process.stdin.resume()
   process.stdin.setEncoding("utf8")
   process.stdin.on("data", function stdin(data) {
@@ -62,5 +68,4 @@ function handleError(e) {
   } else {
     console.error(new Error(e))
   }
-  return
 }
