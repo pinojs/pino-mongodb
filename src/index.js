@@ -41,12 +41,8 @@ async function main() {
         msg: data
       }
     }
-    const writeResult = await collection.insertOne(document)
-    if (!writeResult.nInserted === 1) {
-      console.error("Did not inserted the document", document)
-      return writeResult
-    }
-    console.log("Insrted one document", document)
+    await collection.insertOne(document)
+    process.stdout.write(JSON.stringify(document) + "\n")
   })
 
 }

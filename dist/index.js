@@ -4,6 +4,10 @@ var _regenerator = require("babel-runtime/regenerator");
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _stringify = require("babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -29,7 +33,7 @@ var main = function () {
             process.stdin.setEncoding("utf8");
             process.stdin.on("data", function () {
               var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(data) {
-                var document, writeResult;
+                var document;
                 return _regenerator2.default.wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
@@ -47,20 +51,9 @@ var main = function () {
                         return collection.insertOne(document);
 
                       case 4:
-                        writeResult = _context.sent;
+                        process.stdout.write((0, _stringify2.default)(document) + "\n");
 
-                        if (!(!writeResult.nInserted === 1)) {
-                          _context.next = 8;
-                          break;
-                        }
-
-                        console.error("Did not inserted the document", document);
-                        return _context.abrupt("return", writeResult);
-
-                      case 8:
-                        console.log("Insrted one document", document);
-
-                      case 9:
+                      case 5:
                       case "end":
                         return _context.stop();
                     }
@@ -95,7 +88,7 @@ var _require = require("mongodb"),
 
 var program = require("commander");
 
-program.version(pkg.version).option("-H, --host <host>", "DataBase host (127.0.0.1)", "127.0.0.1").option("-P, --port <port>", "DataBase port (27017)", "27017").option("-d, --db <name>", "DataBase name (logs)", "logs").option("-c, --collection <name>", "DataBase collection name (logs)", "logs").option("-u, --user <username>", "DataBase username (root)", "admin").option("-p, --pass <password>", "DataBase username password ()", "").parse(process.argv);
+program.version(pkg.version).option("-H, --host <host>", "DataBase host (127.0.0.1)", "127.0.0.1").option("-P, --port <port>", "DataBase port (27017)", "27017").option("-d, --db <name>", "DataBase name (logs)", "logs").option("-c, --collection <name>", "DataBase collection name (logs)", "logs").option("-u, --user <username>", "DataBase username (root)", "root").option("-p, --pass <password>", "DataBase username password ()", "").parse(process.argv);
 
 main().catch(function (e) {
   if (e.message) {
