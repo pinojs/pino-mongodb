@@ -21,13 +21,6 @@ program
   .option('--show-insert-errors', 'show errors from inserting documents into mongodb (true)', true)
   .parse(process.argv)
 
-program.host = process.env.DB_HOST || program.host
-program.port = process.env.DB_PORT || program.port
-program.db = process.env.DB_NAME || program.db
-program.collection = process.env.DB_COLLECTION || program.collection
-program.user = process.env.DB_USER || program.user
-program.pass = process.env.DB_PASS || program.pass
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,

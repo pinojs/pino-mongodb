@@ -30,4 +30,3 @@ t.test('makeOptions', t => {
 
   t.end()
 })
-
