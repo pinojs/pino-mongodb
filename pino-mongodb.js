@@ -7,12 +7,12 @@ var jsonParse = require('fast-json-parse')
 params
   .version(pkg.version)
   .description(pkg.description)
-  .option('-H, --host <address>', 'DataBase host (127.0.0.1)', '127.0.0.1')
-  .option('-P, --port <number>', 'DataBase port (27017)', '27017')
+  .option('-H, --host <address>', 'DataBase host (localhost)', 'localhost')
+  .option('-P, --port <number>', 'DataBase port (27017)', 27017)
   .option('-d, --db <name>', 'DataBase name (logs)', 'logs')
   .option('-c, --collection <name>', 'DataBase collection name (logs)', 'logs')
   .option('-u, --user <username>', 'DataBase username (root)', 'root')
-  .option('-p, --pass <password>', 'DataBase username password ()', '')
+  .option('-p, --pass <password>', 'DataBase password (null)', null)
   .parse(process.argv)
 
 params.host = process.env.DB_HOST || params.host
@@ -22,15 +22,7 @@ params.collection = process.env.DB_COLLECTION || params.collection
 params.user = process.env.DB_USER || params.user
 params.pass = process.env.DB_PASS || params.pass
 
-var mongoOptions = 'mongodb://' +
-  (params.user && params.pass
-      ? '[' + params.user + ':' + params.pass + ']@'
-      : '') +
-  params.host +
-  ':' + params.port +
-  '/' + params.db
-
-MongoClient.connect(mongoOptions, onConnection)
+MongoClient.connect(makeMongoOptions(params), onConnection)
 
 function onConnection (e, db) {
   if (e) {
@@ -75,4 +67,21 @@ function handleError (e) {
   } else {
     console.error(new Error(e))
   }
+}
+
+function makeMongoOptions (params) {
+  var string = 'mongodb://'
+  if (params.user && params.pass) {
+    string += '[' + params.user + ':' + params.pass + ']@'
+  }
+  string += params.host
+  string += ':' + params.port
+  string += '/' + params.db
+  return string
+}
+
+module.exports = {
+  onConnection: onConnection,
+  handleError: handleError,
+  makeMongoOptions: makeMongoOptions
 }
