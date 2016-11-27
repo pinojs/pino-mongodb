@@ -1,5 +1,7 @@
 # pino-mongodb
-Load pino logs into MongoDB
+[![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+> Load pino logs into MongoDB
 
 ## Install
 
