@@ -29,9 +29,9 @@ function onConnection (e, db) {
     return handleError(e)
   }
 
-  var collection = db.collection(params.collection)
+  process.stdin.pipe(process.stdout)
 
-  process.stdout.pipe(process.stdin)
+  var collection = db.collection(params.collection)
 
   process.on('SIGINT', function () {
     db.close(function () {
