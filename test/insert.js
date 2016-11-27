@@ -1,8 +1,8 @@
 const t = require('tap')
-const { stdin } = require('../pino-mongodb')
+const insert = require('../lib/insert')
 const sinon = require('sinon')
 
-t.test('stdin', t => {
+t.test('insert', t => {
   t.comment('Function that writes data into mongodb')
 
   t.test('data is an object', t => {
@@ -22,7 +22,7 @@ t.test('stdin', t => {
         insertOne: sinon.stub()
       }
     }
-    stdin.call(context, valueStr)
+    insert.call(context, valueStr)
     t.equal(context.jsonParse.callCount, 1, 'jsonParse should be called once')
     t.equal(context.collection.insertOne.callCount, 1, 'insertOne should be called once')
     t.equal(context.jsonParse.args[0][0], valueStr, 'jsonParse first argument should equals valueStr')
@@ -45,7 +45,7 @@ t.test('stdin', t => {
     const log = {
       msg: value
     }
-    stdin.call(context, value)
+    insert.call(context, value)
     t.equal(context.jsonParse.callCount, 1, 'jsonParse should be called once')
     t.equal(context.collection.insertOne.callCount, 1, 'insertOne should be called once')
     t.equal(context.jsonParse.args[0][0], value, 'jsonParse first argument should equals valueStr')

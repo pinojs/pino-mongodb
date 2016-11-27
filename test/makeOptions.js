@@ -1,11 +1,11 @@
 const t = require('tap')
-const { makeMongoOptions } = require('../pino-mongodb')
+const makeOptions = require('../lib/makeOptions')
 
-t.test('makeMongoOptions', t => {
+t.test('makeOptions', t => {
   t.comment('Function that gets params from commander and make mongo options string from them')
 
   t.test('without user and pass', t => {
-    const options = makeMongoOptions({
+    const options = makeOptions({
       user: 'me',
       pass: 'pass',
       host: 'localhost',
@@ -18,7 +18,7 @@ t.test('makeMongoOptions', t => {
   })
 
   t.test('with user and pass', t => {
-    const options = makeMongoOptions({
+    const options = makeOptions({
       host: 'localhost',
       port: 27017,
       db: 'logs'
