@@ -15,8 +15,8 @@ params
   .option('-c, --collection <name>', 'DataBase collection name (logs)', 'logs')
   .option('-u, --user <username>', 'DataBase username (root)', 'root')
   .option('-p, --pass <password>', 'DataBase password (null)', null)
-  .option('-q, --quiet', 'Suppress stdin output (false)', false)
-  .option('--show-insert-errors', 'Show erorrs from inserting document or not (true)', true)
+  .option('-q, --quiet', 'Suppress stdin to stdout (false)', false)
+  .option('--show-insert-errors', 'Show errors from inserting documents into mongodb (true)', true)
   .parse(process.argv)
 
 params.host = process.env.DB_HOST || params.host

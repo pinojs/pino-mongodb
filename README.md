@@ -40,15 +40,18 @@ env | describe
 ```
   Usage: pino-mongodb [options]
 
+  Load pino logs into MongoDB
+
   Options:
 
     -h, --help               output usage information
     -V, --version            output the version number
-    -H, --host <host>        DataBase host (127.0.0.1)
-    -P, --port <port>        DataBase port (27017)
+    -H, --host <address>     DataBase host (localhost)
+    -P, --port <number>      DataBase port (27017)
     -d, --db <name>          DataBase name (logs)
     -c, --collection <name>  DataBase collection name (logs)
     -u, --user <username>    DataBase username (root)
-    -p, --pass <password>    DataBase username password ()
-
+    -p, --pass <password>    DataBase password (null)
+    -q, --quiet              Suppress stdin to stdout (false)
+    --show-insert-errors     Show errors from inserting documents into mongodb (true)
 ```
