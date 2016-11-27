@@ -29,7 +29,6 @@
   "dependencies": {
     "commander": "^2.9.0",
     "fast-json-parse": "^1.0.2",
-    "fast-safe-stringify": "^1.1.1",
     "mongodb": "^2.2.11"
   },
   "devDependencies": {
