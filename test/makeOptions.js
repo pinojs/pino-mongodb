@@ -13,7 +13,7 @@ t.test('makeOptions', t => {
       db: 'logs'
     })
     t.ok(options, 'options ok')
-    t.equal(options, 'mongodb://[me:pass]@localhost:27017/logs', 'options should are right')
+    t.equal(options, 'mongodb://me:pass@localhost:27017/logs', 'options should are right')
     t.end()
   })
 
