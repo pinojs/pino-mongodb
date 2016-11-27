@@ -55,3 +55,13 @@ env | describe
     -q, --quiet              suppress stdin to stdout output (false)
     --show-insert-errors     show errors from inserting documents into mongodb (true)
 ```
+
+## Tests
+
+```
+npm test
+```
+
+## License
+
+Licensed under [MIT](./LICENSE).
