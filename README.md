@@ -46,12 +46,12 @@ env | describe
 
     -h, --help               output usage information
     -V, --version            output the version number
-    -H, --host <address>     DataBase host (localhost)
-    -P, --port <number>      DataBase port (27017)
-    -d, --db <name>          DataBase name (logs)
-    -c, --collection <name>  DataBase collection name (logs)
-    -u, --user <username>    DataBase username (root)
-    -p, --pass <password>    DataBase password (null)
-    -q, --quiet              Suppress stdin to stdout (false)
-    --show-insert-errors     Show errors from inserting documents into mongodb (true)
+    -H, --host <address>     set database host (localhost)
+    -P, --port <number>      set database port (27017)
+    -d, --db <name>          set database name (logs)
+    -c, --collection <name>  set database collection (logs)
+    -u, --user <username>    set database username
+    -p, --pass <password>    set database password
+    -q, --quiet              suppress stdin to stdout output (false)
+    --show-insert-errors     show errors from inserting documents into mongodb (true)
 ```

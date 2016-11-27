@@ -9,14 +9,14 @@ const params = require('commander')
 params
   .version(pkg.version)
   .description(pkg.description)
-  .option('-H, --host <address>', 'DataBase host (localhost)', 'localhost')
-  .option('-P, --port <number>', 'DataBase port (27017)', 27017)
-  .option('-d, --db <name>', 'DataBase name (logs)', 'logs')
-  .option('-c, --collection <name>', 'DataBase collection name (logs)', 'logs')
-  .option('-u, --user <username>', 'DataBase username (root)', 'root')
-  .option('-p, --pass <password>', 'DataBase password (null)', null)
-  .option('-q, --quiet', 'Suppress stdin to stdout (false)', false)
-  .option('--show-insert-errors', 'Show errors from inserting documents into mongodb (true)', true)
+  .option('-H, --host <address>', 'set database host (localhost)', 'localhost')
+  .option('-P, --port <number>', 'set database port (27017)', 27017)
+  .option('-d, --db <name>', 'set database name (logs)', 'logs')
+  .option('-c, --collection <name>', 'set database collection (logs)', 'logs')
+  .option('-u, --user <username>', 'set database username', undefined)
+  .option('-p, --pass <password>', 'set database password', undefined)
+  .option('-q, --quiet', 'suppress stdin to stdout output (false)', false)
+  .option('--show-insert-errors', 'show errors from inserting documents into mongodb (true)', true)
   .parse(process.argv)
 
 params.host = process.env.DB_HOST || params.host
@@ -42,15 +42,15 @@ function main () {
       return handleError(e)
     }
 
-    const collection = db.collection(params.collection)
-
     process.on('SIGINT', function () {
       db.close(function () {
         process.exit()
       })
     })
 
-    rl.on('line', stdin.bind({ collection: collection }))
+    rl.on('line', stdin.bind({
+      collection: db.collection(params.collection)
+    }))
   })
 }
 
@@ -80,9 +80,7 @@ function makeMongoOptions (params) {
   if (params.user && params.pass) {
     string += '[' + params.user + ':' + params.pass + ']@'
   }
-  string += params.host
-  string += ':' + params.port
-  string += '/' + params.db
+  string += params.host + ':' + params.port + '/' + params.db
   return string
 }
 
