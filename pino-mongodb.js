@@ -67,7 +67,7 @@ function stdin (data) {
   }
 
   this.collection.insertOne(document, function insertOne (e) {
-    if (e && params.quiet) {
+    if (e && !params.quiet) {
       return handleError(e)
     }
   })
