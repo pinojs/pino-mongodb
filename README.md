@@ -4,6 +4,9 @@
 
 > Load pino logs into MongoDB
 
+Actually it will convert any data from `stdin` (not just `pino` logs) and if it can parse it  
+as `JSON` then it will insert that into `mongo` otherwise it will insert that as it is but with `msg` field.
+
 ## Install
 
 ```

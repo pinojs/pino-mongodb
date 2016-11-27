@@ -19,7 +19,9 @@
     "pino",
     "mongo",
     "mongodb",
-    "pino-mongodb"
+    "pino-mongodb",
+    "logs",
+    "logger"
   ],
   "author": "ViktorKonsta",
   "license": "MIT",
