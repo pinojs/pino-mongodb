@@ -4,7 +4,8 @@
   "description": "Load pino logs into MongoDB",
   "main": "index.js",
   "scripts": {
-    "test": "clear && tap test.js",
+    "test": "clear && tap test/*",
+    "tt": "clear && tap",
     "postversion": "git push & git push --tags & npm publish"
   },
   "bin": {

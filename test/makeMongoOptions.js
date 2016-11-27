@@ -1,6 +1,5 @@
 const t = require('tap')
-const { makeMongoOptions } = require('./pino-mongodb')
-const sinon = require('sinon')
+const { makeMongoOptions } = require('../pino-mongodb')
 
 t.test('makeMongoOptions', t => {
   t.comment('Function that gets params from commander and make mongo options string from them')
