@@ -23,13 +23,12 @@ params.user = process.env.DB_USER || params.user
 params.pass = process.env.DB_PASS || params.pass
 
 MongoClient.connect(makeMongoOptions(params), onConnection)
+process.stdin.pipe(process.stdout)
 
 function onConnection (e, db) {
   if (e) {
     return handleError(e)
   }
-
-  process.stdin.pipe(process.stdout)
 
   var collection = db.collection(params.collection)
 
@@ -39,8 +38,6 @@ function onConnection (e, db) {
     })
   })
 
-  process.stdin.resume()
-  process.stdin.setEncoding('utf8')
   process.stdin.on('data', function stdin (data) {
     var document = {}
     var json = jsonParse(data).value
