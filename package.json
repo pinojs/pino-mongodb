@@ -4,7 +4,7 @@
   "description": "Load pino logs into MongoDB",
   "main": "index.js",
   "scripts": {
-    "test": "clear && mocha --opts mocha.opts",
+    "test": "clear && tap test.js",
     "postversion": "git push & git push --tags & npm publish"
   },
   "bin": {
@@ -36,6 +36,7 @@
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
+    "sinon": "^1.17.6",
     "tap": "^8.0.1"
   }
 }
