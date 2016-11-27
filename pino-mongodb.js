@@ -15,7 +15,8 @@ params
   .option('-c, --collection <name>', 'DataBase collection name (logs)', 'logs')
   .option('-u, --user <username>', 'DataBase username (root)', 'root')
   .option('-p, --pass <password>', 'DataBase password (null)', null)
-  .option('-q, --quiet', 'Suppress output', false)
+  .option('-q, --quiet', 'Suppress stdin output (false)', false)
+  .option('--show-insert-errors', 'Show erorrs from inserting document or not (true)', true)
   .parse(process.argv)
 
 params.host = process.env.DB_HOST || params.host
@@ -54,9 +55,10 @@ function main () {
 }
 
 function stdin (data) {
-  let document = {}
   const jsonParse = this.jsonParse || require('fast-json-parse')
+  const params = this.params || params
   const json = jsonParse(data).value
+  let document = {}
 
   if (json) {
     document = json
@@ -67,7 +69,7 @@ function stdin (data) {
   }
 
   this.collection.insertOne(document, function insertOne (e) {
-    if (e && !params.quiet) {
+    if (e && params.showInsertErrors) {
       return handleError(e)
     }
   })
@@ -87,8 +89,11 @@ function makeMongoOptions (params) {
 function handleError (e) {
   if (e instanceof Error) {
     console.error(e)
+    return e
   } else {
-    console.error(new Error(e))
+    const error = new Error(e)
+    console.error(error)
+    return error
   }
 }
 
