@@ -40,6 +40,8 @@ function onConnection (e, db) {
 
   var collection = db.collection(params.collection)
 
+  process.stdout.pipe(process.stdin)
+
   process.on('SIGINT', function () {
     db.close(function () {
       process.exit()
@@ -65,8 +67,6 @@ function onConnection (e, db) {
         return handleError(e)
       }
     })
-
-    process.stdout.write(stringify(document) + '\n')
   })
 }
 
