@@ -6,8 +6,8 @@ t.test('makeOptions', t => {
 
   t.test('without user and pass', t => {
     const options = makeOptions({
-      user: 'me',
-      pass: 'pass',
+      username: 'me',
+      password: 'pass',
       host: 'localhost',
       port: 27017,
       db: 'logs'

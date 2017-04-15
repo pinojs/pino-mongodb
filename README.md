@@ -26,16 +26,16 @@ node my-app.js | pino-mongodb [options]
 
   Options:
 
-    -h, --help               output usage information
-    -V, --version            output the version number
-    -H, --host <address>     set database host (localhost)
-    -P, --port <number>      set database port (27017)
-    -d, --db <name>          set database name (logs)
-    -c, --collection <name>  set database collection (logs)
-    -u, --user <username>    set database username
-    -p, --pass <password>    set database password
-    -q, --quiet              suppress stdin to stdout output (false)
-    --show-insert-errors     show errors from inserting documents into mongodb (true)
+    -h, --help                 output usage information
+    -V, --version              output the version number
+    -H, --host <address>       set database host (localhost)
+    -P, --port <number>        set database port (27017)
+    -d, --db <name>            set database name (logs)
+    -c, --collection <name>    set database collection (logs)
+    -u, --username <username>  username for authentication
+    -p, --password <password>  password for authentication
+    -q, --quiet                suppress stdin to stdout output (false)
+    --show-insert-errors       show errors from inserting documents into mongodb (true)
 ```
 
 ## Tests
