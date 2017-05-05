@@ -2,11 +2,12 @@
   "name": "pino-mongodb",
   "version": "0.7.0",
   "description": "Load pino logs into MongoDB",
-  "main": "index.js",
+  "main": "pino-mongodb.js",
   "scripts": {
     "test": "clear && tap test/*",
     "tt": "clear && tap",
-    "postversion": "git push & git push --tags & npm publish"
+    "postversion": "git push & git push --tags & npm publish",
+    "lint": "eslint ."
   },
   "bin": {
     "pino-mongodb": "pino-mongodb.js"
@@ -36,6 +37,8 @@
   "devDependencies": {
     "eslint": "^3.11.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
     "sinon": "^2.1.0",
