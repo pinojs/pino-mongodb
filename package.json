@@ -1,13 +1,14 @@
 {
   "name": "pino-mongodb",
   "version": "0.7.0",
-  "description": "Load pino logs into MongoDB",
+  "description": "Insert JSON from stdin into MongoDB",
   "main": "pino-mongodb.js",
   "scripts": {
     "test": "clear && tap test/*",
     "tt": "clear && tap",
     "postversion": "git push & git push --tags & npm publish",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "make-help": "./pino-mongodb.js --help > HELP.md"
   },
   "bin": {
     "pino-mongodb": "pino-mongodb.js"
