@@ -5,11 +5,12 @@
   "scripts": {
     "test": "clear && tap test/*",
     "tt": "clear && tap",
+    "preversion": "npm test && npm run lint",
     "postversion": "git push & git push --tags & npm publish",
     "lint": "eslint .",
     "make-help": "./pino-mongodb.js --help > HELP.md"
   },
-  "bin": "./pino-mongodb.js",
+  "bin": "pino-mongodb.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/pinojs/pino-mongodb.git"
