@@ -5,7 +5,7 @@
 > Insert JSON from stdin into MongoDB
 
 This project is part of the `pino` logger family, however you can use it to parse and insert any
-`JSON` into the `mongo.
+`JSON` into the `mongo`.
 
 ## Install
 
