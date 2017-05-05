@@ -1,6 +1,6 @@
 {
   "name": "pino-mongodb",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Insert JSON from stdin into MongoDB",
   "scripts": {
     "test": "clear && tap test/*",
