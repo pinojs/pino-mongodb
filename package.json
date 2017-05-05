@@ -2,7 +2,6 @@
   "name": "pino-mongodb",
   "version": "0.7.0",
   "description": "Insert JSON from stdin into MongoDB",
-  "main": "pino-mongodb.js",
   "scripts": {
     "test": "clear && tap test/*",
     "tt": "clear && tap",
@@ -10,12 +9,10 @@
     "lint": "eslint .",
     "make-help": "./pino-mongodb.js --help > HELP.md"
   },
-  "bin": {
-    "pino-mongodb": "pino-mongodb.js"
-  },
+  "bin": "./pino-mongodb.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ViktorKonsta/pino-mongodb.git"
+    "url": "https://github.com/pinojs/pino-mongodb.git"
   },
   "keywords": [
     "pino",
@@ -25,12 +22,12 @@
     "logs",
     "logger"
   ],
-  "author": "ViktorKonsta",
+  "author": "Viktor Kuroljov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ViktorKonsta/pino-mongodb/issues"
+    "url": "https://github.com/pinojs/pino-mongodb/issues"
   },
-  "homepage": "https://github.com/ViktorKonsta/pino-mongodb#readme",
+  "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "^0.3.0",
     "commander": "^2.9.0",
