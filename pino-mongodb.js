@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 'use strict'
 
-const pkg = require('./package.json')
-const MongoClient = require('mongodb').MongoClient
-const program = require('commander')
-const insert = require('./lib/insert')
-const makeOptions = require('./lib/makeOptions')
-const readline = require('readline')
+var carrier = require('carrier')
+var program = require('commander')
+var MongoClient = require('mongodb').MongoClient
+var pkg = require('./package.json')
+var makeUrl = require('./lib/makeUrl')
+var makeLog = require('./lib/makeLog')
+var makeInsert = require('./lib/insert')
 
 program
   .version(pkg.version)
@@ -17,29 +18,26 @@ program
   .option('-c, --collection <name>', 'set database collection (logs)', 'logs')
   .option('-u, --username <username>', 'username for authentication')
   .option('-p, --password <password>', 'password for authentication')
-  .option('-q, --quiet', 'suppress stdin to stdout output (false)', false)
-  .option('--show-insert-errors', 'show errors from inserting documents into mongodb (true)', true)
+  .option('-o, --stdout', 'stdout inserted documents (false)', false)
+  .option('-e, --errors', 'stderr insertion errors (false)', false)
   .parse(process.argv)
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: !program.quiet
-})
-
-MongoClient.connect(makeOptions(program), function onConnection (e, db) {
+MongoClient.connect(makeUrl(program), function onConnection (e, db) {
   if (e) {
     throw e
   }
+
+  var emitter = carrier.carry(process.stdin)
+  var collection = db.collection(program.collection)
+  var insert = makeInsert(program.errors, program.stdout)
+
+  emitter.on('line', function (data) {
+    insert(collection, makeLog(data))
+  })
 
   process.on('SIGINT', function () {
     db.close(function () {
       process.exit()
     })
   })
-
-  rl.on('line', insert.bind({
-    collection: db.collection(program.collection),
-    program: program
-  }))
 })
