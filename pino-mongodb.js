@@ -12,6 +12,7 @@ var makeInsert = require('./lib/insert')
 program
   .version(pkg.version)
   .description(pkg.description)
+  .option('-U, --url <url>', 'complete database url', 'mongodb://localhost:27017/logs')
   .option('-H, --host <address>', 'database host (localhost)', 'localhost')
   .option('-P, --port <number>', 'database port (27017)', 27017)
   .option('-d, --db <name>', 'database name (logs)', 'logs')
