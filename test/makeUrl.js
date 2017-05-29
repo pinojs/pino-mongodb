@@ -24,7 +24,27 @@ t.test('makeUrl', t => {
       db: 'logs'
     })
     t.ok(url, 'url ok')
-    t.equal(url, 'mongodb://localhost:27017/logs', 'url should are right')
+    t.equal(url, 'mongodb://localhost:27017/logs', 'url should be right')
+    t.end()
+  })
+
+  t.test('host with protocol', t => {
+    const url = makeUrl({
+      host: 'mongodb://localhost',
+      port: 27017,
+      db: 'logs'
+    })
+    t.ok(url, 'url ok')
+    t.equal(url, 'mongodb://localhost:27017/logs', 'url should be right')
+    t.end()
+  })
+
+  t.test('complete url', t => {
+    const url = makeUrl({
+      url: 'mongodb://test:27017/db'
+    })
+    t.ok(url, 'url ok')
+    t.equal(url, 'mongodb://test:27017/db', 'url should be right')
     t.end()
   })
 
