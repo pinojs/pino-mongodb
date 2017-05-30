@@ -38,6 +38,7 @@ node ./app.js | pino-mongodb [options]
 
     -h, --help                 output usage information
     -V, --version              output the version number
+    -U, --url <url>            complete database url
     -H, --host <address>       database host (localhost)
     -P, --port <number>        database port (27017)
     -d, --db <name>            database name (logs)
