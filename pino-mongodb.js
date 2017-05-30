@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict'
 
-var carrier = require('carrier')
-var program = require('commander')
-var MongoClient = require('mongodb').MongoClient
-var pkg = require('./package.json')
-var makeUrl = require('./lib/makeUrl')
-var makeLog = require('./lib/makeLog')
-var makeInsert = require('./lib/insert')
+const carrier = require('carrier')
+const program = require('commander')
+const MongoClient = require('mongodb').MongoClient
+const pkg = require('./package.json')
+const makeUrl = require('./lib/makeUrl')
+const makeLog = require('./lib/makeLog')
+const makeInsert = require('./lib/insert')
 
 program
   .version(pkg.version)
@@ -28,9 +28,9 @@ MongoClient.connect(makeUrl(program), function onConnection (e, db) {
     throw e
   }
 
-  var emitter = carrier.carry(process.stdin)
-  var collection = db.collection(program.collection)
-  var insert = makeInsert(program.errors, program.stdout)
+  const emitter = carrier.carry(process.stdin)
+  const collection = db.collection(program.collection)
+  const insert = makeInsert(program.errors, program.stdout)
 
   emitter.on('line', function (data) {
     insert(collection, makeLog(data))
