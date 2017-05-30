@@ -1,3 +1,5 @@
+'use strict'
+
 const t = require('tap')
 const makeUrl = require('../lib/makeUrl')
 
