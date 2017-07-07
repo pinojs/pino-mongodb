@@ -4,8 +4,6 @@ const t = require('tap')
 const makeUrl = require('../lib/makeUrl')
 
 t.test('makeUrl', t => {
-  t.comment('function that gets params from commander and make mongo url string from them')
-
   t.test('with user and pass', t => {
     const url = makeUrl({
       username: 'me',
