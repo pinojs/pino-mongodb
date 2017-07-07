@@ -8,6 +8,11 @@ const log = require('./lib/log')
 const pkg = require('./package.json')
 const makeUrl = require('./lib/makeUrl')
 const makeInsert = require('./lib/makeInsert')
+const argv = process.argv
+
+if (argv.length <= 2) {
+  argv.push('--help')
+}
 
 program
   .version(pkg.version)
@@ -21,7 +26,7 @@ program
   .option('-p, --password <password>', 'password for authentication')
   .option('-o, --stdout', 'output inserted documents into stdout (false)', false)
   .option('-e, --errors', 'output insertion errors into stderr (false)', false)
-  .parse(process.argv)
+  .parse(argv)
 
 MongoClient.connect(makeUrl(program), function onConnection (e, db) {
   if (e) {
