@@ -4,10 +4,10 @@
 const carrier = require('carrier')
 const program = require('commander')
 const MongoClient = require('mongodb').MongoClient
+const log = require('./lib/log')
 const pkg = require('./package.json')
 const makeUrl = require('./lib/makeUrl')
-const makeLog = require('./lib/makeLog')
-const makeInsert = require('./lib/insert')
+const makeInsert = require('./lib/makeInsert')
 
 program
   .version(pkg.version)
@@ -33,7 +33,7 @@ MongoClient.connect(makeUrl(program), function onConnection (e, db) {
   const insert = makeInsert(program.errors, program.stdout)
 
   emitter.on('line', function (data) {
-    insert(collection, makeLog(data))
+    insert(collection, log(data))
   })
 
   process.on('SIGINT', function () {
