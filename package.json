@@ -3,10 +3,8 @@
   "version": "1.1.0",
   "description": "Insert JSON from stdin into MongoDB",
   "scripts": {
-    "test": "clear && tap test/*",
-    "tt": "clear && tap",
-    "preversion": "npm test && npm run lint",
-    "postversion": "git push & git push --tags & npm publish",
+    "tap": "clear && tap -R dot",
+    "test": "npm run tap test/*.js",
     "lint": "eslint .",
     "make-help": "./pino-mongodb.js --help > HELP.md"
   },
@@ -31,17 +29,17 @@
   "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "^0.3.0",
-    "commander": "^2.9.0",
-    "mongodb": "^2.2.11"
+    "commander": "^2.11.0",
+    "mongodb": "^2.2.29"
   },
   "devDependencies": {
-    "eslint": "^3.11.0",
+    "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "sinon": "^2.1.0",
-    "tap": "^10.3.2"
+    "sinon": "^2.3.6",
+    "tap": "^10.7.0"
   }
 }
