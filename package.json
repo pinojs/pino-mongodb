@@ -6,7 +6,9 @@
     "tap": "clear && tap -R dot",
     "test": "npm run tap test/*.js",
     "lint": "eslint .",
-    "make-help": "./pino-mongodb.js --help > HELP.md"
+    "prepack": "npm shrinkwrap",
+    "postpack": "mv npm-shrinkwrap.json package-lock.json",
+    "help": "./pino-mongodb.js --help > HELP.md"
   },
   "bin": "pino-mongodb.js",
   "repository": {
