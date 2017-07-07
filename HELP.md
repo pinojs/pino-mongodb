@@ -3,9 +3,9 @@
 
   Insert JSON from stdin into MongoDB
 
+
   Options:
 
-    -h, --help                 output usage information
     -V, --version              output the version number
     -U, --url <url>            complete database url
     -H, --host <address>       database host (localhost)
@@ -16,3 +16,4 @@
     -p, --password <password>  password for authentication
     -o, --stdout               output inserted documents into stdout (false)
     -e, --errors               output insertion errors into stderr (false)
+    -h, --help                 output usage information
