@@ -31,8 +31,8 @@
   "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "^0.3.0",
-    "commander": "^2.11.0",
-    "mongodb": "^2.2.31"
+    "commander": "^2.15.1",
+    "mongodb": "^2.2.35"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
