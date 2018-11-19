@@ -12,6 +12,21 @@ t.test('log', t => {
     t.end()
   })
 
+  t.test('valid input with time as Date', t => {
+    const now = Date.now()
+    const expected = {
+      a: 1,
+      time: new Date(now)
+    }
+    const actual = log(JSON.stringify({
+      ...expected,
+      time: now
+    }))
+
+    t.deepEqual(actual, expected)
+    t.end()
+  })
+
   t.test('invalid input', t => {
     const expected = { msg: 'message' }
     const actual = log('message')
