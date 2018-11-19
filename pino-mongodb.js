@@ -10,10 +10,6 @@ const makeUrl = require('./lib/makeUrl')
 const makeInsert = require('./lib/makeInsert')
 const argv = process.argv
 
-if (argv.length <= 2) {
-  argv.push('--help')
-}
-
 program
   .version(pkg.version)
   .description(pkg.description)
