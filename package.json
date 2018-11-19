@@ -30,7 +30,7 @@
   "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "^0.3.0",
-    "commander": "^2.15.1",
+    "commander": "^2.19.0",
     "mongodb": "^2.2.35"
   },
   "devDependencies": {
