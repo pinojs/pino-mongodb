@@ -19,7 +19,7 @@ t.test('log', t => {
       time: new Date(now)
     }
     const actual = log(JSON.stringify({
-      ...expected,
+      a: expected.a,
       time: now
     }))
 
