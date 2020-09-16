@@ -15,8 +15,6 @@ echo 'should work with invalid json' | ./pino-mongodb.js -u $url &
 
 sleep 3
 
-docker exec -it $container mongo admin -u one -p two --eval "db.getCollection(\"logs\").find()"
-
 node trial/assert.js $url && echo OK || echo Fail
 
 echo Down...
