@@ -2,6 +2,9 @@
   "name": "pino-mongodb",
   "version": "2.1.1",
   "description": "Insert JSON from stdin into MongoDB",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "tap test",
     "lint": "eslint .",
