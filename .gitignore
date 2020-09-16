@@ -2,3 +2,4 @@
 node_modules
 *.tgz
 .idea
+.nyc_output
