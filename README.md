@@ -9,22 +9,22 @@ This project is part of the `pino` logger family, however you can use it to pars
 
 ## Install
 
-```
-npm i -g pino-mongodb
+```bash
+$ npm i -g pino-mongodb
 ```
 
 ## Get started
 
 ```bash
-echo '{"name": "Viktor"}' | pino-mongodb [options] [mongo-url]
+$ echo '{"name": "Viktor"}' | pino-mongodb [options] [mongo-url]
 ```
 
 ```bash
-cat many.logs | pino-mongodb [options] [mongo-url]
+$ cat many.logs | pino-mongodb [options] [mongo-url]
 ```
 
 ```bash
-node ./app.js | pino-mongodb [options] [mongo-url]
+$ node ./app.js | pino-mongodb [options] [mongo-url]
 ```
 
 ## Usage
@@ -39,14 +39,26 @@ Options:
   -c, --collection <name>  database collection (default: "logs")
   -o, --stdout             output inserted documents into stdout
   -e, --errors             output insertion errors into stderr
+  -u, --unified            use mongodb unified topology
   -h, --help               output usage information
 ```
 
 ## Tests
 
+To run unit tests:
+
+```bash
+$ npm t
 ```
-npm t
+
+To run integrational tests with real mongo server:
+
+```bash
+$ npm run trial
 ```
+
+Note, you will have to have `docker` and `docker-compose` installed
+on your machine for that!
 
 ## License
 
