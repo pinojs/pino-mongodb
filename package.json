@@ -5,9 +5,11 @@
   "scripts": {
     "test": "tap test",
     "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "prepack": "npm shrinkwrap",
     "postpack": "mv npm-shrinkwrap.json package-lock.json",
-    "help": "./pino-mongodb.js --help > HELP.md"
+    "help": "./pino-mongodb.js --help > HELP.md",
+    "trial": "./trial/run.sh"
   },
   "bin": "pino-mongodb.js",
   "repository": {
