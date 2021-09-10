@@ -35,7 +35,7 @@
   "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "0.3",
-    "commander": "8.1",
+    "commander": "8.2",
     "mongodb": "4.1",
     "muri": "1.3"
   },
