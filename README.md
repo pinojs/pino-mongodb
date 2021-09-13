@@ -12,10 +12,37 @@ This project is part of the `pino` logger family, however you can use it to pars
 ## Install
 
 ```bash
-$ npm i -g pino-mongodb
+$ npm i pino-mongodb
 ```
 
-## Get started
+## Usage as Pino Transport
+
+You can use this module as a [pino transport](https://getpino.io/#/docs/transports?id=v7-transports) like so:
+
+```js
+const pino = require('pino')
+const transport = pino.transport({
+  uri: 'mongodb://localhost:27017/',
+  database: 'logs',
+  collection: 'log-collection',
+  mongoOptions: {
+    auth: {
+      username: 'one',
+      password: 'two'
+    }
+  }
+})
+pino(transport)
+```
+
+The `mongoOptions` is provided to the the standard mongodb client. All the available options are described on [its official documentation](https://mongodb.github.io/node-mongodb-native/4.1/interfaces/MongoClientOptions.html).
+
+## Usage as Pino Legacy Transport
+
+Pino supports a [legacy transport interface](https://getpino.io/#/docs/transports?id=legacy-transports)
+that is still supported by this module.
+
+### Get started
 
 ```bash
 $ echo '{"name": "Viktor"}' | pino-mongodb [options] [mongo-url]
@@ -29,7 +56,7 @@ $ cat many.logs | pino-mongodb [options] [mongo-url]
 $ node ./app.js | pino-mongodb [options] [mongo-url]
 ```
 
-## Usage
+### CLI Options
 
 ```
 Usage: pino-mongodb [options] [mongo-url]
