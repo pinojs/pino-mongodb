@@ -2,8 +2,11 @@
 
 const t = require('tap')
 const { once } = require('events')
+const { promisify } = require('util')
 const pino = require('pino')
 const { MongoClient } = require('mongodb')
+
+const setTimeout = promisify(global.setTimeout)
 
 t.test('auth transport test', async (t) => {
   const options = {
@@ -41,9 +44,7 @@ t.test('auth transport test', async (t) => {
   log.fatal(new Error('ops'), 'not ignored')
   t.pass('logged on mongo')
 
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000)
-  })
+  await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
   t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
