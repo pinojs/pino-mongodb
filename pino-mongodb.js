@@ -25,7 +25,6 @@ function cli () {
     .option('-c, --collection <name>', 'database collection', transport.defaultOption.collection)
     .option('-o, --stdout', 'output inserted documents into stdout', false)
     .option('-e, --errors', 'output insertion errors into stderr', false)
-    .option('-u, --unified', 'use mongodb unified topology', transport.defaultOption.unified)
     .parse(process.argv)
 
   const mongoUrl = (program.args[0] || transport.defaultOption.uri)
@@ -51,8 +50,7 @@ function cli () {
     })
   }
 
-  const options = { useNewUrlParser: true }
-  if (program.unified) { options.useUnifiedTopology = true }
+  const options = {}
 
   MongoClient.connect(
     mongoUrl,
