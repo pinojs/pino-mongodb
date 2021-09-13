@@ -37,7 +37,8 @@
     "carrier": "0.3",
     "commander": "8.2",
     "mongodb": "4.1",
-    "muri": "1.3"
+    "muri": "1.3",
+    "pino-abstract-transport": "^0.2.0"
   },
   "devDependencies": {
     "eslint": "7.32",

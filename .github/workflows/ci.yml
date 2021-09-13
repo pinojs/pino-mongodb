@@ -17,6 +17,15 @@ jobs:
         node-version: [12, 14, 16]
         os: [macos-latest, ubuntu-latest, windows-latest]
 
+    services:
+      mongodb:
+        image: mongo:5.0.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: one
+          MONGO_INITDB_ROOT_PASSWORD: two
+
     steps:
 
       - uses: actions/checkout@v2
