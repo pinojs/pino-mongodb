@@ -30,7 +30,7 @@ t.test('auth transport test', async (t) => {
   const rowsBefore = await collection.countDocuments()
 
   const transport = pino.transport({
-    target: '../pino-mongodb.js',
+    target: '../../pino-mongodb.js',
     level: 'info',
     options
   })

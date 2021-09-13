@@ -15,19 +15,9 @@ jobs:
     strategy:
       matrix:
         node-version: [12, 14, 16]
-        os: [macos-latest, ubuntu-latest, windows-latest]
-
-    services:
-      mongodb:
-        image: mongo:5
-        ports:
-          - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: one
-          MONGO_INITDB_ROOT_PASSWORD: two
+        os: [macos-latest, windows-latest]
 
     steps:
-
       - uses: actions/checkout@v2
 
       - name: Use Node.js
@@ -43,8 +33,41 @@ jobs:
         run: |
           npm test
 
+  test-end2end:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [12, 14, 16]
+        os: [ubuntu-latest]
+
+    services:
+      mongodb:
+        image: mongo:5
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: one
+          MONGO_INITDB_ROOT_PASSWORD: two
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install
+        run: |
+          npm install --ignore-scripts
+
+      - name: Run tests
+        run: |
+          npm run test:end2end
+
   automerge:
-    needs: test
+    needs: [test, test-end2end]
     runs-on: ubuntu-latest
     steps:
       - uses: fastify/github-action-merge-dependabot@v2.4.0
