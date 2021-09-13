@@ -19,7 +19,7 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:5.0.0
+        image: mongo:5
         ports:
           - 27017:27017
         env:
