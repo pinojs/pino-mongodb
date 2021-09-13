@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "test": "tap test/*.js",
-    "test:end2end": "npm test && tap test/end-to-end/*.js",
+    "test:end2end": "npm test && tap --no-check-coverage test/end-to-end/*.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepack": "npm shrinkwrap",
