@@ -55,10 +55,10 @@ t.test('auth transport test', async (t) => {
     collection: 'log-test'
   }
 
-  const client = new MongoClient(options.uri, options.mongoOptions)
+  const client = new MongoClient(options.uri)
   await client.connect()
   t.teardown(client.close.bind(client))
-  const db = client.db(options.database)
+  const db = client.db()
   const collection = db.collection(options.collection)
 
   const rowsBefore = await collection.countDocuments()
