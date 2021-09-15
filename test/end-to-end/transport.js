@@ -80,3 +80,40 @@ t.test('auth transport test', async (t) => {
   const rowsAfter = await collection.countDocuments()
   t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
+
+t.test('log blocked items', async (t) => {
+  const options = {
+    uri: 'mongodb://one:two@localhost:27017/dbname?authSource=admin',
+    collection: 'log-block'
+  }
+
+  const client = new MongoClient(options.uri)
+  await client.connect()
+  t.teardown(client.close.bind(client))
+  const db = client.db()
+  const collection = db.collection(options.collection)
+
+  const rowsBefore = await collection.countDocuments()
+
+  const transport = pino.transport({
+    target: '../../pino-mongodb.js',
+    level: 'info',
+    options
+  })
+  const log = pino(transport)
+
+  await once(transport, 'ready')
+  log.info({ query: { $and: [{ a: 1 }, { b: 2 }] } }, 'my query was')
+  log.info({ 'foo.bar': 42 }, 'dot object')
+  t.pass('logged on mongo')
+
+  await setTimeout(1000)
+
+  const rowsAfter = await collection.countDocuments()
+  t.equal(rowsAfter, rowsBefore + 2, 'log not inserted due the mongo limitation')
+
+  log.info('the stream is open')
+  await setTimeout(1000)
+  const rowsInserted = await collection.countDocuments()
+  t.equal(rowsInserted, rowsAfter + 1, 'logs are still working')
+})

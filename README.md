@@ -37,6 +37,17 @@ pino(transport)
 
 The `mongoOptions` is provided to the the standard mongodb client. All the available options are described on [its official documentation](https://mongodb.github.io/node-mongodb-native/4.1/interfaces/MongoClientOptions.html).
 
+Note that you may encouter missing logs in special cases: it dependes on data and mongo's version. Please checkout the [mongodb limitation](https://docs.mongodb.com/manual/reference/limits/) official documentation.  
+For example on MongoDB 4:
+
+```js
+// IT DOES NOT WORK:
+log.info({ $and: [{ a: 1 }, { b: 2 }] }, 'my query is')
+
+// IT WORKS:
+log.info({ query: { $and: [{ a: 1 }, { b: 2 }]} }, 'my query is')
+```
+
 ## Usage as Pino Legacy Transport
 
 Pino supports a [legacy transport interface](https://getpino.io/#/docs/transports?id=legacy-transports)
