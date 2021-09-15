@@ -8,7 +8,7 @@ t.test('log', t => {
     const expected = { a: 1 }
     const actual = log(JSON.stringify(expected))
 
-    t.deepEqual(actual, expected)
+    t.same(actual, expected)
     t.end()
   })
 
@@ -23,7 +23,7 @@ t.test('log', t => {
       time: now
     }))
 
-    t.deepEqual(actual, expected)
+    t.same(actual, expected)
     t.end()
   })
 
@@ -31,7 +31,15 @@ t.test('log', t => {
     const expected = { msg: 'message' }
     const actual = log('message')
 
-    t.deepEqual(actual, expected)
+    t.same(actual, expected)
+    t.end()
+  })
+
+  t.test('do not mutate object', t => {
+    const expected = { msg: 'message' }
+    const actual = log(expected)
+
+    t.same(actual, expected)
     t.end()
   })
 

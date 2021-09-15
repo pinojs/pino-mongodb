@@ -8,45 +8,53 @@ const parseMongoUrl = require('muri')
 const log = require('./lib/log')
 const pkg = require('./package.json')
 const makeInsert = require('./lib/makeInsert')
+const transport = require('./lib/pino-transport')
 
-program
-  .version(pkg.version)
-  .description(pkg.description)
-  .arguments('[mongo-url]')
-  .option('-c, --collection <name>', 'database collection', 'logs')
-  .option('-o, --stdout', 'output inserted documents into stdout', false)
-  .option('-e, --errors', 'output insertion errors into stderr', false)
-  .option('-u, --unified', 'use mongodb unified topology', false)
-  .parse(process.argv)
+module.exports = transport
 
-const mongoUrl = (program.args[0] || 'mongodb://localhost:27017/logs')
-
-function handleConnection (e, mClient) {
-  if (e) {
-    throw e
-  }
-
-  const dbName = parseMongoUrl(mongoUrl).db
-
-  const db = mClient.db(dbName)
-  const emitter = carrier.carry(process.stdin)
-  const collection = db.collection(program.collection)
-  const insert = makeInsert(program.errors, program.stdout)
-
-  emitter.on('line', (line) => {
-    insert(collection, log(line))
-  })
-
-  process.on('SIGINT', () => {
-    mClient.close(process.exit)
-  })
+if (require.main === module) {
+  // used as cli
+  cli()
 }
 
-const options = { useNewUrlParser: true }
-if (program.unified) { options.useUnifiedTopology = true }
+function cli () {
+  program
+    .version(pkg.version)
+    .description(pkg.description)
+    .arguments('[mongo-url]')
+    .option('-c, --collection <name>', 'database collection', transport.defaultOption.collection)
+    .option('-o, --stdout', 'output inserted documents into stdout', false)
+    .option('-e, --errors', 'output insertion errors into stderr', false)
+    .parse(process.argv)
 
-MongoClient.connect(
-  mongoUrl,
-  options,
-  handleConnection
-)
+  const mongoUrl = (program.args[0] || transport.defaultOption.uri)
+
+  function handleConnection (e, mClient) {
+    if (e) {
+      throw e
+    }
+
+    const dbName = parseMongoUrl(mongoUrl).db
+
+    const db = mClient.db(dbName)
+    const emitter = carrier.carry(process.stdin)
+    const collection = db.collection(program.collection)
+    const insert = makeInsert(program.errors, program.stdout)
+
+    emitter.on('line', (line) => {
+      insert(collection, log(line))
+    })
+
+    process.on('SIGINT', () => {
+      mClient.close(process.exit)
+    })
+  }
+
+  const options = {}
+
+  MongoClient.connect(
+    mongoUrl,
+    options,
+    handleConnection
+  )
+}
