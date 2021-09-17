@@ -48,6 +48,24 @@ log.info({ $and: [{ a: 1 }, { b: 2 }] }, 'my query is')
 log.info({ query: { $and: [{ a: 1 }, { b: 2 }]} }, 'my query is')
 ```
 
+If you want a custom parser to handle the above case. You can pass a function through `option.parseLine`. Any value that is not a function will be ignored in this option.
+
+```js
+const pino = require('pino')
+const transport = pino.transport({
+  uri: 'mongodb://localhost:27017/logs',
+  collection: 'log-collection',
+  parseLine(str) { // `str` is passed from `pino` and expected to be a string
+    const obj = JSON.parse(str)
+    
+    // do anything you want...
+
+    return obj // return value is expected to be a json that will pass and save inside mongodb
+  }
+})
+pino(transport)
+```
+
 ## Usage as Pino Legacy Transport
 
 Pino supports a [legacy transport interface](https://getpino.io/#/docs/transports?id=legacy-transports)
