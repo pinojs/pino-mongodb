@@ -118,7 +118,7 @@ t.test('log blocked items', async (t) => {
   t.equal(rowsInserted, rowsAfter + 1, 'logs are still working')
 })
 
-t.test('custom parse line function' , async (t) => {
+t.test('custom parse line function', async (t) => {
   let counter = 0
   const options = {
     uri: 'mongodb://localhost:27017/',
@@ -132,7 +132,7 @@ t.test('custom parse line function' , async (t) => {
         password: 'two'
       }
     },
-    parseLine: function(str) {
+    parseLine: function (str) {
       const obj = JSON.parse(str)
       counter++
       return obj
@@ -166,7 +166,7 @@ t.test('custom parse line function' , async (t) => {
   t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
 
-t.test('invalid custom parse line function' , async (t) => {
+t.test('invalid custom parse line function', async (t) => {
   const options = {
     uri: 'mongodb://localhost:27017/',
     database: 'logs',
