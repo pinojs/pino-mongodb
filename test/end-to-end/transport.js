@@ -116,4 +116,6 @@ t.test('log blocked items', async (t) => {
   await setTimeout(1000)
   const rowsInserted = await collection.countDocuments()
   t.equal(rowsInserted, rowsAfter + 1, 'logs are still working')
+
+  await client.close()
 })

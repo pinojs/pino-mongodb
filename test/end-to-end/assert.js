@@ -19,7 +19,7 @@ t.test('must log to a custom collection', async () => {
   ], {
     cwd: __dirname,
     killSignal: 'SIGINT',
-    stdio: ['pipe', 'inherit', 'inherit']
+    stdio: ['pipe', null, null]
   })
 
   const client = new MongoClient(mongoUrl)
@@ -36,10 +36,10 @@ t.test('must log to a custom collection', async () => {
 
   await setTimeout(1000)
 
+  process.kill('SIGINT')
+  await once(process, 'close')
+
   const rowsAfter = await collection.countDocuments()
   t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
-
-  process.kill('SIGINT')
-
-  await once(process, 'close')
+  await client.close()
 })
