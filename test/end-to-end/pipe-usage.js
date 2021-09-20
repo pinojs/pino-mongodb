@@ -6,7 +6,7 @@ const { promisify } = require('util')
 const { MongoClient } = require('mongodb')
 const { once } = require('events')
 
-const mongoUrl = 'mongodb://one:two@localhost:27017/saymyname?authSource=admin'
+const mongoUrl = 'mongodb://one:two@localhost:27017/newdb?authSource=admin'
 const setTimeout = promisify(global.setTimeout)
 
 t.test('must log to a custom collection', async (t) => {
@@ -35,12 +35,11 @@ t.test('must log to a custom collection', async (t) => {
   childProcess.stdin.write('hello pino-mongo 2\n')
 
   await setTimeout(1000)
-
   childProcess.kill('SIGINT')
   try {
     await once(childProcess, 'close')
     const rowsAfter = await collection.countDocuments()
-    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows', { skip: process.version.startsWith('v12.') })
+    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
   } catch (error) {
     t.error(error)
   }

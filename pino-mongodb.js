@@ -46,7 +46,7 @@ function cli () {
       insert(collection, log(line))
     })
 
-    process.on('SIGINT', () => {
+    process.once('SIGINT', () => {
       mClient.close(process.exit)
     })
   }
