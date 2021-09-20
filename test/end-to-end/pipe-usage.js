@@ -9,7 +9,7 @@ const { once } = require('events')
 const mongoUrl = 'mongodb://one:two@localhost:27017/saymyname?authSource=admin'
 const setTimeout = promisify(global.setTimeout)
 
-t.test('must log to a custom collection', async () => {
+t.test('must log to a custom collection', async (t) => {
   const customCollection = 'custom-collection'
   const childProcess = spawn('node', [
     '../../pino-mongodb.js',
@@ -18,7 +18,7 @@ t.test('must log to a custom collection', async () => {
     customCollection
   ], {
     cwd: __dirname,
-    stdio: ['pipe', 'inherit', 'inherit']
+    stdio: ['pipe', null, null]
   })
 
   const client = new MongoClient(mongoUrl)
@@ -36,11 +36,11 @@ t.test('must log to a custom collection', async () => {
 
   await setTimeout(1000)
 
-  childProcess.kill('SIGTERM')
+  childProcess.kill('SIGINT')
   try {
     await once(childProcess, 'close')
     const rowsAfter = await collection.countDocuments()
-    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows', { skip: process.version.startsWith('v12.') })
   } catch (error) {
     t.error(error)
   }
