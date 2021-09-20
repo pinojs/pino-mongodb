@@ -34,7 +34,7 @@ t.test('must log to a custom collection', async (t) => {
   childProcess.stdin.write(`${JSON.stringify({ hello: 'pino' })}\n`)
   childProcess.stdin.write('hello pino-mongo 2\n')
 
-  await setTimeout(1000)
+  await setTimeout(5000)
   childProcess.kill('SIGINT')
   try {
     await once(childProcess, 'close')
