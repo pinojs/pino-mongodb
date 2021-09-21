@@ -119,7 +119,6 @@ t.test('log blocked items', async (t) => {
 })
 
 t.test('custom parse line function', async (t) => {
-  let counter = 0
   const options = {
     uri: 'mongodb://localhost:27017/',
     database: 'logs',
@@ -131,11 +130,6 @@ t.test('custom parse line function', async (t) => {
         username: 'one',
         password: 'two'
       }
-    },
-    parseLine: function (str) {
-      const obj = JSON.parse(str)
-      counter++
-      return obj
     }
   }
 
@@ -148,7 +142,7 @@ t.test('custom parse line function', async (t) => {
   const rowsBefore = await collection.countDocuments()
 
   const transport = pino.transport({
-    target: '../../pino-mongodb.js',
+    target: '../fixture/wrap-transport.js',
     level: 'info',
     options
   })
@@ -162,7 +156,6 @@ t.test('custom parse line function', async (t) => {
 
   await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
-  t.equal(counter, 3, 'parsed 3 rows')
   t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
 
