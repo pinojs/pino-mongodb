@@ -27,6 +27,7 @@ function cli () {
     .option('-e, --errors', 'output insertion errors into stderr', false)
     .parse(process.argv)
 
+  const cliOptions = program.opts()
   const mongoUrl = (program.args[0] || transport.defaultOption.uri)
 
   function handleConnection (e, mClient) {
@@ -38,14 +39,14 @@ function cli () {
 
     const db = mClient.db(dbName)
     const emitter = carrier.carry(process.stdin)
-    const collection = db.collection(program.collection)
-    const insert = makeInsert(program.errors, program.stdout)
+    const collection = db.collection(cliOptions.collection)
+    const insert = makeInsert(cliOptions.errors, cliOptions.stdout)
 
     emitter.on('line', (line) => {
       insert(collection, log(line))
     })
 
-    process.on('SIGINT', () => {
+    process.once('SIGINT', () => {
       mClient.close(process.exit)
     })
   }
