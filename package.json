@@ -1,6 +1,6 @@
 {
   "name": "pino-mongodb",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Insert JSON from stdin into MongoDB",
   "files": [
     "lib"
