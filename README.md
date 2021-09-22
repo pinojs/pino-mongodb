@@ -52,9 +52,11 @@ If you want a custom parser to handle the above case. You need to wrap `pino-mon
 
 ```js
 // mongo-transport.js
-const transport = require('pino-mongo')
+'use strict'
 
-module.exports = async function(opts) {
+const transport = require('pino-mongodb')
+
+module.exports = function(opts) {
   opts.parseLine = function(str) { // `str` is passed from `pino` and expected to be a string
     const obj = JSON.parse(str)
     
@@ -68,7 +70,7 @@ module.exports = async function(opts) {
 // main.js
 const pino = require('pino')
 const transport = pino.transport({
-  target: 'mongo-transport.js',
+  target: './mongo-transport.js',
   uri: 'mongodb://localhost:27017/logs',
   collection: 'log-collection',
 })
