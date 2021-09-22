@@ -22,16 +22,21 @@ You can use this module as a [pino transport](https://getpino.io/#/docs/transpor
 ```js
 const pino = require('pino')
 const transport = pino.transport({
-  uri: 'mongodb://localhost:27017/',
-  database: 'logs',
-  collection: 'log-collection',
-  mongoOptions: {
-    auth: {
-      username: 'one',
-      password: 'two'
+  target: 'pino-mongodb',
+  level: 'info',
+  options: {
+    uri: 'mongodb://localhost:27017/',
+    database: 'logs',
+    collection: 'log-collection',
+    mongoOptions: {
+      auth: {
+        username: 'one',
+        password: 'two'
+      }
     }
   }
 })
+
 pino(transport)
 ```
 
