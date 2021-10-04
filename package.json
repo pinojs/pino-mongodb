@@ -15,6 +15,7 @@
     "help": "./pino-mongodb.js --help > HELP.md",
     "trial": "./trial/run.sh"
   },
+  "main": "pino-mongodb.js",
   "bin": "pino-mongodb.js",
   "repository": {
     "type": "git",
