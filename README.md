@@ -53,7 +53,7 @@ log.info({ $and: [{ a: 1 }, { b: 2 }] }, 'my query is')
 log.info({ query: { $and: [{ a: 1 }, { b: 2 }]} }, 'my query is')
 ```
 
-If you want a custom parser to handle the above case. You need to wrap `pino-mongo` and passa function through `option.parseLine`. Any value that is not a function will be ignored in this option.
+If you want a custom parser to handle the above case. You need to wrap `pino-mongo` and pass a function through `option.parseLine`. Any value that is not a function will be ignored in this option.
 
 ```js
 // mongo-transport.js
