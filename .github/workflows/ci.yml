@@ -18,7 +18,7 @@ jobs:
         os: [macos-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
         uses: actions/setup-node@v3.0.0
@@ -51,7 +51,7 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: two
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js
         uses: actions/setup-node@v3.0.0
