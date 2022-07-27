@@ -2,13 +2,10 @@
 
 const t = require('tap')
 const { spawn } = require('child_process')
-const { promisify } = require('util')
 const { MongoClient } = require('mongodb')
 const { once } = require('events')
-const EOL = require('os').EOL
 
 const mongoUrl = 'mongodb://one:two@localhost:27017/newdb?authSource=admin'
-const setTimeout = promisify(global.setTimeout)
 
 t.test('must log to a custom collection', async (t) => {
   const customCollection = 'custom-collection'
@@ -34,13 +31,34 @@ t.test('must log to a custom collection', async (t) => {
   childProcess.stdin.write('hello pino-mongo 1\n')
   childProcess.stdin.write(`${JSON.stringify({ hello: 'pino' })}\n`)
   childProcess.stdin.write('hello pino-mongo 2\n')
+  childProcess.stdin.end()
 
-  await setTimeout(5000)
-  childProcess.kill('SIGINT')
   try {
     await once(childProcess, 'close')
     const rowsAfter = await collection.countDocuments()
     t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+  } catch (error) {
+    t.error(error)
+  }
+})
+
+t.test('must exit when the stdin is destroyed', async (t) => {
+  const customCollection = 'custom-collection'
+  const childProcess = spawn('node', [
+    '../../pino-mongodb.js',
+    mongoUrl,
+    '-c',
+    customCollection
+  ], {
+    cwd: __dirname,
+    stdio: ['pipe', null, null]
+  })
+
+  childProcess.stdin.end()
+
+  try {
+    await once(childProcess, 'close')
+    t.pass('pino-mongo exits')
   } catch (error) {
     t.error(error)
   }
@@ -71,9 +89,8 @@ t.test('must write logs to the console with -o option', async (t) => {
   childProcess.stdin.write('hello pino-mongo 1\n')
   childProcess.stdin.write(`${JSON.stringify({ hello: 'pino' })}\n`)
   childProcess.stdin.write('hello pino-mongo 2\n')
-  await setTimeout(5000)
+  childProcess.stdin.end()
 
-  childProcess.kill('SIGINT')
   // read stdout
   const chunks = []
   for await (let chunk of childProcess.stdout) {
