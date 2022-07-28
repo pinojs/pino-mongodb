@@ -41,16 +41,18 @@ function cli () {
     const emitter = carrier.carry(process.stdin)
     const collection = db.collection(cliOptions.collection)
     const insert = makeInsert(cliOptions.errors, cliOptions.stdout)
+
     let insertCounter = 0
+    const insertCallback = function () {
+      insertCounter--
+      if (process.stdin.destroyed && insertCounter === 0) {
+        mClient.close(process.exit)
+      }
+    }
 
     emitter.on('line', (line) => {
       insertCounter++
-      insert(collection, log(line), () => {
-        insertCounter--
-        if (process.stdin.destroyed && insertCounter === 0) {
-          mClient.close(process.exit)
-        }
-      })
+      insert(collection, log(line), insertCallback)
     })
 
     process.stdin.on('close', () => {
