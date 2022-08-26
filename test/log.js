@@ -26,6 +26,20 @@ t.test('log', t => {
     t.same(actual, expected)
     t.end()
   })
+  t.test('valid input with timestamp as Date', t => {
+    const now = Date.now()
+    const expected = {
+      a: 1,
+      timestamp: new Date(now)
+    }
+    const actual = log(JSON.stringify({
+      a: expected.a,
+      timestamp: now
+    }))
+
+    t.same(actual, expected)
+    t.end()
+  })
 
   t.test('invalid input', t => {
     const expected = { msg: 'message' }
