@@ -39,7 +39,7 @@ const transport = pino.transport({
 pino(transport)
 ```
 
-The `mongoOptions` is provided to the the standard mongodb client. All the available options are described on [its official documentation](https://mongodb.github.io/node-mongodb-native/4.1/interfaces/MongoClientOptions.html).
+The `mongoOptions` is provided to the the standard mongodb client. All the available options are described on [its official documentation](https://mongodb.github.io/node-mongodb-native/6.4/interfaces/MongoClientOptions.html)
 
 Note that you may encouter missing logs in special cases: it dependes on data and mongo's version. Please checkout the [mongodb limitation](https://docs.mongodb.com/manual/reference/limits/) official documentation.  
 For example on MongoDB 4:
