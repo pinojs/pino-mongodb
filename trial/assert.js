@@ -3,7 +3,7 @@ const t = require('assert').strict
 
 async function main () {
   const url = process.argv.slice(2, 3)[0]
-  const conn = await MongoClient.connect(url, { useUnifiedTopology: true })
+  const conn = await MongoClient.connect(url)
   const db = conn.db('admin')
   const logs = db.collection('logs')
 
