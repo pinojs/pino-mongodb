@@ -1,13 +1,14 @@
 'use strict'
 
-const t = require('tap')
-const { spawn } = require('child_process')
+const test = require('node:test')
+const assert = require('node:assert')
+const { spawn } = require('node:child_process')
+const { once } = require('node:events')
 const { MongoClient } = require('mongodb')
-const { once } = require('events')
 
 const mongoUrl = 'mongodb://one:two@localhost:27017/newdb?authSource=admin'
 
-t.test('must log to a custom collection', async (t) => {
+test('must log to a custom collection', async (t) => {
   const customCollection = 'custom-collection'
   const childProcess = spawn('node', [
     '../../pino-mongodb.js',
@@ -21,12 +22,12 @@ t.test('must log to a custom collection', async (t) => {
 
   const client = new MongoClient(mongoUrl)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db()
   const collection = db.collection(customCollection)
 
   const rowsBefore = await collection.countDocuments()
-  t.pass(`rows count ${rowsBefore}`)
+  assert.ok(`rows count ${rowsBefore}`)
 
   childProcess.stdin.write('hello pino-mongo 1\n')
   childProcess.stdin.write(`${JSON.stringify({ hello: 'pino' })}\n`)
@@ -36,13 +37,13 @@ t.test('must log to a custom collection', async (t) => {
   try {
     await once(childProcess, 'close')
     const rowsAfter = await collection.countDocuments()
-    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+    assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
   } catch (error) {
-    t.error(error)
+    assert.fail(error.message)
   }
 })
 
-t.test('must exit when the stdin is destroyed', async (t) => {
+test('must exit when the stdin is destroyed', async (t) => {
   const customCollection = 'custom-collection'
   const childProcess = spawn('node', [
     '../../pino-mongodb.js',
@@ -58,13 +59,13 @@ t.test('must exit when the stdin is destroyed', async (t) => {
 
   try {
     await once(childProcess, 'close')
-    t.pass('pino-mongo exits')
+    assert.ok('pino-mongo exits')
   } catch (error) {
-    t.error(error)
+    assert.fail(error.message)
   }
 })
 
-t.test('must write logs to the console with -o option', async (t) => {
+test('must write logs to the console with -o option', async (t) => {
   const customCollection = 'custom-collection'
   const childProcess = spawn('node', [
     '../../pino-mongodb.js',
@@ -79,12 +80,12 @@ t.test('must write logs to the console with -o option', async (t) => {
 
   const client = new MongoClient(mongoUrl)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db()
   const collection = db.collection(customCollection)
 
   const rowsBefore = await collection.countDocuments()
-  t.pass(`rows count ${rowsBefore}`)
+  assert.ok(`rows count ${rowsBefore}`)
 
   childProcess.stdin.write('hello pino-mongo 1\n')
   childProcess.stdin.write(`${JSON.stringify({ hello: 'pino' })}\n`)
@@ -93,17 +94,17 @@ t.test('must write logs to the console with -o option', async (t) => {
 
   // read stdout
   const chunks = []
-  for await (let chunk of childProcess.stdout) {
+  for await (const chunk of childProcess.stdout) {
     chunks.push(chunk)
   }
   const output = Buffer.concat(chunks).toString()
-  t.equal(output.trim().split('\n').length, 3)
+  assert.equal(output.trim().split('\n').length, 3)
 
   try {
     await once(childProcess, 'close')
     const rowsAfter = await collection.countDocuments()
-    t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+    assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
   } catch (error) {
-    t.error(error)
+    assert.fail(error.message)
   }
 })

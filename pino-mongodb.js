@@ -2,8 +2,8 @@
 'use strict'
 
 const carrier = require('carrier')
-const program = require('commander')
-const MongoClient = require('mongodb').MongoClient
+const { program } = require('commander')
+const { MongoClient } = require('mongodb')
 const parseMongoUrl = require('muri')
 const log = require('./lib/log')
 const pkg = require('./package.json')
@@ -68,9 +68,11 @@ function cli () {
 
   const options = {}
 
-  MongoClient.connect(
-    mongoUrl,
-    options,
-    handleConnection
-  )
+  MongoClient.connect(mongoUrl, options)
+    .then((client) => {
+      handleConnection(null, client)
+    })
+    .catch((error) => {
+      handleConnection(error)
+    })
 }

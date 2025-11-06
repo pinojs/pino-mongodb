@@ -1,7 +1,6 @@
 # pino-mongodb
 [![npm version](https://img.shields.io/npm/v/pino-mongodb)](https://www.npmjs.com/package/pino-mongodb)
 [![Build Status](https://img.shields.io/github/workflow/status/pinojs/pino-mongodb/CI)](https://github.com/pinojs/pino-mongodb/actions)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 > Insert JSON from stdin into MongoDB
 

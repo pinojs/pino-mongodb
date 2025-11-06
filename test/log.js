@@ -1,61 +1,53 @@
 'use strict'
 
-const t = require('tap')
+const test = require('node:test')
+const assert = require('node:assert')
 const log = require('../lib/log')
 
-t.test('log', t => {
-  t.test('valid input', t => {
-    const expected = { a: 1 }
-    const actual = log(JSON.stringify(expected))
+test('valid input', t => {
+  const expected = { a: 1 }
+  const actual = log(JSON.stringify(expected))
 
-    t.same(actual, expected)
-    t.end()
-  })
+  assert.deepEqual(actual, expected)
+})
 
-  t.test('valid input with time as Date', t => {
-    const now = Date.now()
-    const expected = {
-      a: 1,
-      time: new Date(now)
-    }
-    const actual = log(JSON.stringify({
-      a: expected.a,
-      time: now
-    }))
+test('valid input with time as Date', t => {
+  const now = Date.now()
+  const expected = {
+    a: 1,
+    time: new Date(now)
+  }
+  const actual = log(JSON.stringify({
+    a: expected.a,
+    time: now
+  }))
 
-    t.same(actual, expected)
-    t.end()
-  })
-  t.test('valid input with timestamp as Date', t => {
-    const now = Date.now()
-    const expected = {
-      a: 1,
-      timestamp: new Date(now)
-    }
-    const actual = log(JSON.stringify({
-      a: expected.a,
-      timestamp: now
-    }))
+  assert.deepEqual(actual, expected)
+})
+test('valid input with timestamp as Date', t => {
+  const now = Date.now()
+  const expected = {
+    a: 1,
+    timestamp: new Date(now)
+  }
+  const actual = log(JSON.stringify({
+    a: expected.a,
+    timestamp: now
+  }))
 
-    t.same(actual, expected)
-    t.end()
-  })
+  assert.deepEqual(actual, expected)
+})
 
-  t.test('invalid input', t => {
-    const expected = { msg: 'message' }
-    const actual = log('message')
+test('invalid input', t => {
+  const expected = { msg: 'message' }
+  const actual = log('message')
 
-    t.same(actual, expected)
-    t.end()
-  })
+  assert.deepEqual(actual, expected)
+})
 
-  t.test('do not mutate object', t => {
-    const expected = { msg: 'message' }
-    const actual = log(expected)
+test('do not mutate object', t => {
+  const expected = { msg: 'message' }
+  const actual = log(expected)
 
-    t.same(actual, expected)
-    t.end()
-  })
-
-  t.end()
+  assert.deepEqual(actual, expected)
 })

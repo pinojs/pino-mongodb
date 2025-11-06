@@ -1,20 +1,20 @@
 'use strict'
 
-const t = require('tap')
-const { once } = require('events')
-const { promisify } = require('util')
+const test = require('node:test')
+const assert = require('node:assert')
+const { once } = require('node:events')
+const { promisify } = require('node:util')
 const pino = require('pino')
 const { MongoClient } = require('mongodb')
 
 const setTimeout = promisify(global.setTimeout)
 
-t.test('auth transport test', async (t) => {
+test('auth transport test', async (t) => {
   const options = {
     uri: 'mongodb://localhost:27017/',
     database: 'logs',
     collection: 'log-test',
     mongoOptions: {
-      useNewUrlParser: true,
       authMechanism: 'SCRAM-SHA-1',
       auth: {
         username: 'one',
@@ -25,7 +25,7 @@ t.test('auth transport test', async (t) => {
 
   const client = new MongoClient(options.uri, options.mongoOptions)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db(options.database)
   const collection = db.collection(options.collection)
 
@@ -42,14 +42,14 @@ t.test('auth transport test', async (t) => {
   log.debug('ignored')
   log.info('this is a long string log'.repeat(1000))
   log.fatal(new Error('ops'), 'not ignored')
-  t.pass('logged on mongo')
+  assert.ok('logged on mongo')
 
   await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
-  t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+  assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
 
-t.test('auth transport test', async (t) => {
+test('auth transport test', async (t) => {
   const options = {
     uri: 'mongodb://one:two@localhost:27017/dbname?authSource=admin',
     collection: 'log-test'
@@ -57,7 +57,7 @@ t.test('auth transport test', async (t) => {
 
   const client = new MongoClient(options.uri)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db()
   const collection = db.collection(options.collection)
 
@@ -74,14 +74,14 @@ t.test('auth transport test', async (t) => {
   log.debug('ignored')
   log.info('this is a long string log'.repeat(1000))
   log.fatal(new Error('ops'), 'not ignored')
-  t.pass('logged on mongo')
+  assert.ok('logged on mongo')
 
   await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
-  t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+  assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
 
-t.test('log blocked items', async (t) => {
+test('log blocked items', async (t) => {
   const options = {
     uri: 'mongodb://one:two@localhost:27017/dbname?authSource=admin',
     collection: 'log-block'
@@ -89,7 +89,7 @@ t.test('log blocked items', async (t) => {
 
   const client = new MongoClient(options.uri)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db()
   const collection = db.collection(options.collection)
 
@@ -105,26 +105,25 @@ t.test('log blocked items', async (t) => {
   await once(transport, 'ready')
   log.info({ query: { $and: [{ a: 1 }, { b: 2 }] } }, 'my query was')
   log.info({ 'foo.bar': 42 }, 'dot object')
-  t.pass('logged on mongo')
+  assert.ok('logged on mongo')
 
   await setTimeout(1000)
 
   const rowsAfter = await collection.countDocuments()
-  t.equal(rowsAfter, rowsBefore + 2, 'log not inserted due the mongo limitation')
+  assert.equal(rowsAfter, rowsBefore + 2, 'log not inserted due the mongo limitation')
 
   log.info('the stream is open')
   await setTimeout(1000)
   const rowsInserted = await collection.countDocuments()
-  t.equal(rowsInserted, rowsAfter + 1, 'logs are still working')
+  assert.equal(rowsInserted, rowsAfter + 1, 'logs are still working')
 })
 
-t.test('custom parse line function', async (t) => {
+test('custom parse line function', async (t) => {
   const options = {
     uri: 'mongodb://localhost:27017/',
     database: 'logs',
     collection: 'log-test',
     mongoOptions: {
-      useNewUrlParser: true,
       authMechanism: 'SCRAM-SHA-1',
       auth: {
         username: 'one',
@@ -135,7 +134,7 @@ t.test('custom parse line function', async (t) => {
 
   const client = new MongoClient(options.uri, options.mongoOptions)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db(options.database)
   const collection = db.collection(options.collection)
 
@@ -152,20 +151,19 @@ t.test('custom parse line function', async (t) => {
   log.debug('ignored')
   log.info('this is a long string log'.repeat(1000))
   log.fatal(new Error('ops'), 'not ignored')
-  t.pass('logged on mongo')
+  assert.ok('logged on mongo')
 
   await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
-  t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+  assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
 
-t.test('invalid custom parse line function', async (t) => {
+test('invalid custom parse line function', async (t) => {
   const options = {
     uri: 'mongodb://localhost:27017/',
     database: 'logs',
     collection: 'log-test',
     mongoOptions: {
-      useNewUrlParser: true,
       authMechanism: 'SCRAM-SHA-1',
       auth: {
         username: 'one',
@@ -177,7 +175,7 @@ t.test('invalid custom parse line function', async (t) => {
 
   const client = new MongoClient(options.uri, options.mongoOptions)
   await client.connect()
-  t.teardown(client.close.bind(client))
+  t.after(client.close.bind(client))
   const db = client.db(options.database)
   const collection = db.collection(options.collection)
 
@@ -194,9 +192,9 @@ t.test('invalid custom parse line function', async (t) => {
   log.debug('ignored')
   log.info('this is a long string log'.repeat(1000))
   log.fatal(new Error('ops'), 'not ignored')
-  t.pass('logged on mongo')
+  assert.ok('logged on mongo')
 
   await setTimeout(1000)
   const rowsAfter = await collection.countDocuments()
-  t.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
+  assert.equal(rowsAfter, rowsBefore + 3, 'logged 3 rows')
 })
