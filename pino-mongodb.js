@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 
+const { nextTick } = require('node:process')
 const carrier = require('carrier')
 const { program } = require('commander')
 const { MongoClient } = require('mongodb')
@@ -70,7 +71,7 @@ function cli () {
 
   MongoClient.connect(mongoUrl, options)
     .then((client) => {
-      handleConnection(null, client)
+      nextTick(() => handleConnection(null, client))
     })
     .catch((error) => {
       handleConnection(error)
