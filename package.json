@@ -6,8 +6,8 @@
     "lib"
   ],
   "scripts": {
-    "test": "tap test/*.js",
-    "test:end2end": "npm test && tap --no-check-coverage -t 0 test/end-to-end/*.js",
+    "test": "borp --coverage test/log.js",
+    "test:end2end": "npm test && borp 'test/end-to-end/*.js'",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "help": "./pino-mongodb.js --help > HELP.md",
@@ -35,19 +35,15 @@
   "homepage": "https://github.com/pinojs/pino-mongodb",
   "dependencies": {
     "carrier": "^0.3",
-    "commander": "^10.0",
-    "mongodb": "^4.7",
+    "commander": "^14.0.2",
+    "mongodb": "^6.20.0",
     "muri": "^1.3",
-    "pino-abstract-transport": "^1.0.0"
+    "pino-abstract-transport": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "7.32",
-    "eslint-config-standard": "16.0",
-    "eslint-plugin-import": "2.29",
-    "eslint-plugin-node": "11.1",
-    "eslint-plugin-promise": "5.2",
-    "eslint-plugin-standard": "5.0",
-    "pino": "^8.0.0",
-    "tap": "^16.x"
+    "borp": "^0.21.0",
+    "eslint": "^9.39.1",
+    "neostandard": "^0.12.2",
+    "pino": "^10.1.0"
   }
 }
